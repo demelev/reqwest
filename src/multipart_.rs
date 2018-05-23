@@ -109,7 +109,7 @@ impl Form {
         }
         // If there is a at least one field there is a special boundary for the very last field.
         if self.fields.len() != 0 {
-            length += 2 + self.boundary.len() as u64 + 2
+            length += 2 + self.boundary.len() as u64 + 2 + 2
         }
         Some(length)
     }
@@ -272,7 +272,7 @@ impl Reader {
                 Some(Box::new(reader))
             } else {
                 Some(Box::new(reader.chain(Cursor::new(
-                    format!("--{}--", self.form.boundary),
+                    format!("--{}--\r\n", self.form.boundary),
                 ))))
             }
         } else {
